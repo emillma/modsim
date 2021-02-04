@@ -8,4 +8,11 @@ function [ state_dot ] = Kinematics( t, state, parameters )
     % - check matlab documentation on how to invert a matrix, alternatively
     %   how to best solve Ax = b for x (what is recommended?) 
     % Code your equations here...
+    omega = parameters;
+    Omega = [ 0, -omega(3), omega(2);
+        omega(3), 0, -omega(1);
+        -omega(2), omega(1), 0];
+    R = reshape(state, [3, 3]);
+    state_dot = reshape (R*Omega, [9,1]);
+
 end

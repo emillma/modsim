@@ -16,12 +16,13 @@ try
     %%%%%% - "parameters" allows you to pass some parameters to the "Kinematic" function.
     %%%%%% - "state" will contain representations of the solid orientation (SO(3)).
     %%%%%% - use the "reshape" function to turn a matrix into a vector or vice-versa.
-
+    state = reshape(eye(3),[9,1]);
+    parameters = [1; 0; 1];
     [time,statetraj] = ode45(@(t,x)Kinematics(t, x, parameters),[0,time_final],state);
 
 catch message
     display('Your simulation failed with the following message:')
-    display(message.message)
+    display(message.message) 
     display(' ')
 
     %Assign dummy time and states if simulation failed
@@ -39,15 +40,13 @@ while time_display < time(end)
 
     state_animate = interp1(time,statetraj,time_display); %interpolate the simulated state at the current clock time
 
-    p     = [5;5;5];  % Position of the single body
+    p = [5;5;5];  % Position of the single body
 
     %%%%%% MODIFY THE FOLLOWING LINES TO PRODUCE AN "omega" AND "R" FROM YOUR SIMULATION STATE
 
-    omega = [0;0;4];  % Some random Omega
+    omega = parameters;  % Some random Omega
 
-    R     = [   -0.8603    0.4343   -0.2670
-                -0.4771   -0.8705    0.1213
-                -0.1797    0.2317    0.9560]; % Some random rotation matrix
+    R = reshape(state_animate,[3,3]);
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
