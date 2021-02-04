@@ -17,7 +17,7 @@ try
     %%%%%% - "state" will contain representations of the solid orientation (SO(3)).
     %%%%%% - use the "reshape" function to turn a matrix into a vector or vice-versa.
     state = reshape(eye(3),[9,1]);
-    parameters = [1; 0; 1];
+    parameters = [1; 0.2; 0.5];
     [time,statetraj] = ode45(@(t,x)Kinematics(t, x, parameters),[0,time_final],state);
 
 catch message
