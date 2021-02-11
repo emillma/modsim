@@ -2,14 +2,14 @@ import re
 
 
 def format_text(text):
-    text = re.sub(r'^[\d>]+ ', '', text, flags=re.MULTILINE)
-    text = re.sub(r'(?<!^) ', '', text, flags=re.MULTILINE)
-    text = re.sub(r' ', '    ', text, flags=re.MULTILINE)
+    text = re.sub(r'^( *)[\d>]+ ', r'\g<1>', text, flags=re.MULTILINE)
+    text = re.sub(r'(?<! ) (?! )', '', text, flags=re.MULTILINE)
     text = re.sub(r'=', ' = ', text, flags=re.MULTILINE)
     text = re.sub(r',', ', ', text, flags=re.MULTILINE)
     text = re.sub('∗', ' * ', text, flags=re.MULTILINE)
     text = re.sub('−', '-', text, flags=re.MULTILINE)
     text = re.sub('ˆ', '^', text, flags=re.MULTILINE)
+    text = re.sub('’', "'", text, flags=re.MULTILINE)
     return text
 
 

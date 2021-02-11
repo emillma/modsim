@@ -13,7 +13,7 @@ function [statedot] = SatelliteDynamics(t, x, parameters)
             velocity;
             reshape(R * omegacross, 9, 1);
             GravityAcceleration(position);
-            -inertia \ omegacross * inertia * omega
+            -inv(inertia) * omegacross * inertia * omega
             ];
 end
 
