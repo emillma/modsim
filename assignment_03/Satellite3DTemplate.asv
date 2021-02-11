@@ -11,12 +11,11 @@ position = orbit_height * [0 0 1]';
 I = eye(3);
 orientation = reshape(I, [9, 1]); %nedover
 velocity = 3066.89 * [0 1 0]';
-angular_velocity = [1 / (1 * 3600) 0 0]'; % omega
+angular_velocity = [1 / (10 * 3600) 0 1 / (2 * 3600)]'; % omega
 
 m = 0.1;
 length = 0.5;
-d = 0.25 * [1 1 1]';
-inertia = (1/6) * m * length * eye(3) + m * (d' * d * I - d * d');
+inertia = (1/6) * m * l eye(3);
 parameters = inertia;
 state = [
     position;
