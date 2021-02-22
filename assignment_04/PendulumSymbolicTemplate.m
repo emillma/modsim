@@ -4,41 +4,43 @@ clc
 % Parameters
 syms m M g L F real
 % Variables
-syms x  theta1  theta2 real
-syms dx dtheta1 dtheta2 real
+syms x  theta_1  theta_2 real
+syms dx dtheta_1 dtheta_2 real
 
 % Define symbolic variable q for the generalized coordinates
 % x, theta1 and theta2
-q = [];
+q = [x; theta_1; theta_2];
 % Define symbolic variable dq for the derivatives 
 % of the generalized coordinates
-dq = [];
+dq = [dx; dtheta_1; dtheta_2];
 % Write the expressions for the positions of the masses
-p{1} = [];
-p{2} = p{1} + [];
+p{1} = [q(1)+sin(theta_1)*L ;
+        -cos(theta_1)*L];
+p{2} = p{1} + [sin(theta_2)*L ;
+               -cos(theta_2)*L];
       
 % Kinetic energy of the cart
-T = ;
+T = (m/2)*dq(1)^2;
 % For loop that adds the kinetic energies of the masses
 for k = 1:length(p)
     dp{k} = jacobian(p{k},q)*dq; % velocity of mass k
-    T = T + ; % add kinetic energy of mass k
+    T = T + (M/2)*(dp{k}(1)^2+dp{k}(2)^2); % add kinetic energy of mass k
 end
 T = simplify(T);
 
 % Potential energy of the cart
-V = ; 
+V = 0; 
 % For loop that adds the potential energies of the masses
 for k = 1:length(p)
-    V = V + ; % add potential energy of mass k
+    V = V + m*g*p{k}(2); % add potential energy of mass k
 end
 V = simplify(V);
 
 % Generalized forces
-Q = [];
+Q = [F; 0; 0];
 
 % Lagrangian
-Lag = ;
+Lag = T - V;
 
 Lag_q = simplify(jacobian(Lag,q)).';
 Lag_qdq = simplify(jacobian(Lag_q.',dq));

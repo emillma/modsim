@@ -4,15 +4,15 @@ clc
 
 % Parameters and initial states
 tf = 45;
-% parameters =
-% state =
+parameters = [1; 0.1; 1; 9.81];
+state = [1; pi/4; 0; 0; 0; 0];
 
 % Simulation
 try
 
     %%%%%% MODIFY THE CODE AS YOU SEE FIT
 
-    [tsim,xsim] = ode45(@(t,x)PendulumDynamics(t, x, parameters),[0,tf],state);
+    [tsim,xsim] = ode45(@(t,x)PendulumDynamics(t, x, 0, parameters),[0,tf],state);
 
 catch message
     display('Your simulation failed with the following message:')
@@ -63,12 +63,12 @@ t_disp = 0;
 SimSpeed = 1;
  while t_disp < tf/SimSpeed
     % Interpolate state
-%     x_disp   = interp1(tsim,xsim,SimSpeed*t_disp)';
+    x_disp   = interp1(tsim,xsim,SimSpeed*t_disp)';
 
     % Unwrap state. MODIFY
-    x = 1; % position cart
-    p1 = 1*[sin(pi/4);-cos(pi/4)]; % position 1st ball
-    p2 = p1 + 1*[sin(pi/2);-cos(pi/2)]; % position 2nd ball
+    x = x_disp(1); % position cart
+    p1 = 1*[x+sin(x_disp(2));-cos(x_disp(2))]; % position 1st ball
+    p2 = p1 + 1*[sin(x_disp(3));-cos(x_disp(3))]; % position 2nd ball
 
     % Input argument for DrawPendulm
     pos_disp = [x(1);p1(1);0;p1(2);p2(1);0;p2(2)];
