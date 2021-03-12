@@ -1,0 +1,41 @@
+x0 = [1 1]';
+z0 = x0;
+tspan = [0:0.01:10];
+
+opt=odeset('AbsTol',1e-6, 'RelTol',1e-6);
+%DAE
+[t1,X1] = ode15s(@daefun,tspan,x0, opt);
+%ODE
+[t2, X2] = ode15s(@odefun, tspan, [x0; z0], opt);
+plot(t1, X1);
+hold on;
+plot(t2, X2(:,1));
+plot(t2, X2(:,2));
+hold off;
+legend('DAE x_1','DAE x_2','ODE x_1','ODE x_2');
+%plot(X(2));
+%xlim([0 3])
+function [ X_dot ] = odefun(t, X)
+     % X = [x, z]
+     x = X(1:2);
+     z = X(3:4);
+     e = 10^(-3);
+     alpha = 10^(-3);
+     A = [x(1)^2 x(2);
+          0.0 x(2)^2] + alpha*eye(2);
+     M = [1 1;
+          0 1];
+
+     X_dot(3:4) = 1/e * (1/10*x - A*z); % z_dot 
+     X_dot(1:2) = -M*x - z; % x_dot
+     X_dot = X_dot';
+end
+function [x_dot] = daefun(t, x)
+     alpha = 10^(-3);
+     A = [x(1)^2 x(2);
+          0.0 x(2)^2] + alpha*eye(2);
+     z = (1/10)*A\x; % e = 0
+     M = [1 1;
+          0 1];
+     x_dot = -M*x - z;
+end

@@ -12,7 +12,7 @@ try
 
     %%%%%% MODIFY THE CODE AS YOU SEE FIT
 
-    [tsim,xsim] = ode45(@(t,x)PendulumDynamics(t, x, 0, parameters),[0,tf],state);
+    [tsim,xsim] = ode45(@(t,x)PendulumDynamics(t, x, parameters),[0,tf],state);
 
 catch message
     display('Your simulation failed with the following message:')

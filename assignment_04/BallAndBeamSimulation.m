@@ -4,8 +4,8 @@ clc
 
 % Parameters and initial states
 tf = 15;
-% parameters =
-% state =
+parameters = [1; 10; 0.25; 9.81];
+state = [1;0;0;0];
 
 % Simulation
 try
@@ -50,11 +50,11 @@ t_disp = 0;
 SimSpeed = 1;
 while t_disp < tf/SimSpeed
     % Interpolate state
-%     x_disp   = interp1(tsim,xsim,SimSpeed*t_disp)';
+    x_disp   = interp1(tsim,xsim,SimSpeed*t_disp)';
 
     % Unwrap state. MODIFY
-    theta = pi/6; % beam angle
-    pos = 1*[cos(theta);sin(theta)] + ball_radius*[-sin(theta);cos(theta)];
+    theta = x_disp(2); % beam angle
+    pos = x_disp(1)*[cos(theta);sin(theta)] + ball_radius*[-sin(theta);cos(theta)];
     pos = [pos(1);0;pos(2)]; % ball position
 
     figid = figure(1);clf;hold on
