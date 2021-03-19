@@ -14,6 +14,7 @@ result = NewtonsMethodTemplate(f, J, x0);
 
 residual = vecnorm(f(result), inf, 1);
 
+J([1; pi]) %not full rank
 semilogy(residual);
 grid on;
 ylabel('Residual')
