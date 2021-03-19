@@ -15,7 +15,7 @@ function x = ImplicitEulerTemplate(f, dfdx, T, x0)
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     xt = x0; % initial iteration
     % Loop over time points
-    for nt=2:Nt
+    for nt = 2:Nt
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         % Update variables
         % Define the residual function for this time step
@@ -26,4 +26,5 @@ function x = ImplicitEulerTemplate(f, dfdx, T, x0)
         %
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     end
+
 end
