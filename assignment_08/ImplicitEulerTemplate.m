@@ -10,8 +10,12 @@ function x = ImplicitEulerTemplate(f, dfdx, T, x0)
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     % Define variables
     % Allocate space for iterations (x)
-    %
-    %
+
+    Nx = size(x0, 1);
+    Nt = size(T, 2);
+    x = zeros(Nx, Nt);
+    x(:, 1) = x0;
+
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     xt = x0; % initial iteration
     % Loop over time points
@@ -22,8 +26,15 @@ function x = ImplicitEulerTemplate(f, dfdx, T, x0)
         % Define the Jacobian of this residual
         % Call your Newton's method function
         % Calculate and save next iteration value xt
-        %
-        %
+
+        dt = T(nt) - T(nt - 1);
+        tk = T(nt);
+        phi = @(x) xt + dt * f(tk, x) - x;
+        J_phi = @(x) dt * dfdx(tk, x) - eye(Nx);
+        X_newton = NewtonsMethodTemplate(phi, J_phi, xt);
+        xt = X_newton(:, end);
+        x(:, nt) = xt;
+
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     end
 

@@ -12,31 +12,43 @@ function X = NewtonsMethodTemplate(f, J, x0, tol, N)
     end
 
     if nargin < 4
-        tol = 1e-6;
+        tol = 1e-10;
     end
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     % Define variables
     % Allocate space for iterations (X)
-    %
-    %
+
+    Nx = size(x0, 1);
+    X = NaN(Nx, N);
+
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     xn = x0; % initial estimate
     n = 1; % iteration number
     fn = f(xn); % save calculation
+    X(:, n) = xn;
     % Iterate until f(x) is small enough or
     % the maximum number of iterations has been reached
     iterate = norm(fn, Inf) > tol;
 
-    while iterate
+    while iterate && n <= N;
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         % Calculate and save next iteration value x
-        %
-        %
+
+        xn = xn - J(xn)\ fn;
+        n = n + 1;
+        X(:, n) = xn;
+
         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         fn = f(xn); % save calculation for next iteration
         % Continue iterating?
-        iterate = norm(fn, Inf) > tol && n <= N;
+        iterate = norm(fn, Inf) > tol;
     end
+
+    if iterate
+        fprintf('Target precision not met\n')
+    end
+
+    X = X(:, 1:n);
 
 end
